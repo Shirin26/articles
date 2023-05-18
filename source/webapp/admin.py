@@ -6,7 +6,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     list_filter = ['author']
     search_fields = ['title', 'content']
-    fields = ['id', 'title','author','content', 'created_at', 'updated_at']
+    fields = ['title', 'author', 'content', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']
 
 admin.site.register(Article, ArticleAdmin)

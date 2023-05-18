@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from webapp.models import Article
+from django.urls import reverse
 
 def index_views(request):
     articles = Article.objects.order_by('-created_at')
@@ -8,9 +10,8 @@ def index_views(request):
     }
     return render(request, "index.html", context)
 
-def article_view(request):
-    article_id = request.GET.get('id')
-    article = Article.objects.get(pk=article_id)
+def article_view(request, pk, *args, **kwargs):
+    article = get_object_or_404(Article, pk=pk)
     context = {'article': article}
     return render(request, 'article_view.html', context)
 
@@ -22,5 +23,4 @@ def article_create_view(request):
         content = request.POST.get('content')
         author = request.POST.get('author')
         new_article = Article.objects.create(title=title, content=content, author=author)
-        context = {'article': new_article}
-        return render(request, 'article_view.html', context)
+        return redirect('article_view', pk=new_article.pk)
