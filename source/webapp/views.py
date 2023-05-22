@@ -38,8 +38,8 @@ def article_update_view(request, pk):
 
 def article_delete_view(request, pk):
     article = get_object_or_404(Article, pk=pk)
-    # if request.method == 'GET':
-    #     return render(request, 'article_delete.html', {'article': article})
-    # elif request.method == 'POST':
-    article.delete()
-    return redirect('index')
+    if request.method == 'GET':
+        return render(request, 'article_delete.html', {'article': article})
+    elif request.method == 'POST':
+        article.delete()
+        return redirect('index')
